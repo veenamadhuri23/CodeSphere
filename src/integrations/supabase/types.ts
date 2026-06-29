@@ -14,7 +14,143 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      problems: {
+        Row: {
+          acceptance: number
+          constraints: string[]
+          created_at: string
+          description: string
+          difficulty: Database["public"]["Enums"]["difficulty_level"]
+          examples: Json
+          id: string
+          slug: string
+          starter_code: Json
+          tags: string[]
+          title: string
+        }
+        Insert: {
+          acceptance?: number
+          constraints?: string[]
+          created_at?: string
+          description: string
+          difficulty: Database["public"]["Enums"]["difficulty_level"]
+          examples?: Json
+          id?: string
+          slug: string
+          starter_code?: Json
+          tags?: string[]
+          title: string
+        }
+        Update: {
+          acceptance?: number
+          constraints?: string[]
+          created_at?: string
+          description?: string
+          difficulty?: Database["public"]["Enums"]["difficulty_level"]
+          examples?: Json
+          id?: string
+          slug?: string
+          starter_code?: Json
+          tags?: string[]
+          title?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          country: string | null
+          created_at: string
+          github: string | null
+          id: string
+          institution: string | null
+          last_solved_date: string | null
+          linkedin: string | null
+          rating: number
+          skills: string[] | null
+          streak: number
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          country?: string | null
+          created_at?: string
+          github?: string | null
+          id: string
+          institution?: string | null
+          last_solved_date?: string | null
+          linkedin?: string | null
+          rating?: number
+          skills?: string[] | null
+          streak?: number
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          country?: string | null
+          created_at?: string
+          github?: string | null
+          id?: string
+          institution?: string | null
+          last_solved_date?: string | null
+          linkedin?: string | null
+          rating?: number
+          skills?: string[] | null
+          streak?: number
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      submissions: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          language: string
+          memory_kb: number
+          problem_id: string
+          runtime_ms: number
+          status: Database["public"]["Enums"]["submission_status"]
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          language: string
+          memory_kb?: number
+          problem_id: string
+          runtime_ms?: number
+          status: Database["public"]["Enums"]["submission_status"]
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          language?: string
+          memory_kb?: number
+          problem_id?: string
+          runtime_ms?: number
+          status?: Database["public"]["Enums"]["submission_status"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submissions_problem_id_fkey"
+            columns: ["problem_id"]
+            isOneToOne: false
+            referencedRelation: "problems"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +159,13 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      difficulty_level: "easy" | "medium" | "hard"
+      submission_status:
+        | "accepted"
+        | "wrong_answer"
+        | "tle"
+        | "runtime_error"
+        | "compile_error"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +292,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      difficulty_level: ["easy", "medium", "hard"],
+      submission_status: [
+        "accepted",
+        "wrong_answer",
+        "tle",
+        "runtime_error",
+        "compile_error",
+      ],
+    },
   },
 } as const
