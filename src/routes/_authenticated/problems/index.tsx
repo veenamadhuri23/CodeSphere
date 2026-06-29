@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Search, Filter } from "lucide-react";
 import { useState } from "react";
 import { useProblems } from "@/lib/queries";
-import { DifficultyChip } from "./dashboard";
+import { DifficultyChip } from "../dashboard";
 
 export const Route = createFileRoute("/_authenticated/problems/")({
   head: () => ({ meta: [{ title: "Problems — Codiarc" }] }),
